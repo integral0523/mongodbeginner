@@ -1,76 +1,70 @@
 const mongodb = require('mongodb') 
 const b = {
-    update : async(dbName, collectionName, filter, update, url="mondodb://localhost:27017")=>{
-        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
+    update : async(dbName, collectionName, filter, update, url="mongodb://localhost:27017")=>{
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology: true });
         db = await client.db(dbName)
-        await db.collection(collectionName).updateOne(filter,{$set:{update}},(err,res)=>{
+        await db.collection(collectionName).updateOne(filter,{$set:update},(err,res)=>{
             if(err){
                 console.error(err)
-                return
+                client.close()
+                return false
             }
+            client.close()
             return true
         })
-        client.close()
     },
-    insert : async(dbName, collectionName, insert, url="mondodb://localhost:27017")=>{
-        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
+    insert : async(dbName, collectionName, insert, url="mongodb://localhost:27017")=>{
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology: true });
         db = await client.db(dbName)
-        await db.collection(collectionName).insertOne({insert},(err,res)=>{
+        await db.collection(collectionName).insertOne(insert,(err,res)=>{
             if(err){
                 console.error(err)
-                return
+                client.close()
+                return false
             }
+            client.close()
             return true
         })
-        client.close()
     },
-    upsert : async(dbName, collectionName, filter, update, url="mondodb://localhost:27017")=>{
-        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
+    upsert : async(dbName, collectionName, filter, update, url="mongodb://localhost:27017")=>{
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology: true });
         db = await client.db(dbName)
         await db.collection(collectionName).updateOne(filter,{$set:{update}},{upsert:true},(err,res)=>{
             if(err){
                 console.error(err)
+                client.close()
                 return
             }
+            client.close()
             return true
         })
-        client.close()
     },
-    find : async(dbName, collectionName, filter, url="mondodb://localhost:27017")=>{
-        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
+    find : async(dbName, collectionName, filter, url="mongodb://localhost:27017")=>{
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology: true });
         db = await client.db(dbName)
-        await db.collection(collectionName).find(filter,(err,documents)=>{
-            if(err){
-                console.error(err)
-                return
-            }
-            return documents
-        })
+        documents = await db.collection(collectionName).find(filter).toArray()
         client.close()
+        return documents
     },
-    findOne : async(dbName, collectionName, filter, url="mondodb://localhost:27017")=>{
-        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
+    findOne : async(dbName, collectionName, filter, url="mongodb://localhost:27017")=>{
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology: true });
         db = await client.db(dbName)
-        await db.collection(collectionName).find(filter,(err,documents)=>{
-            if(err){
-                console.error(err)
-                return
-            }
-            return documents[0]
-        })
+        documents = await db.collection(collectionName).find(filter).toArray()
         client.close()
+        return documents[0]
     },
-    remove: async(dbName, collectionName, filter, url="mondodb://localhost:27017")=>{
-        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
+    remove: async(dbName, collectionName, filter, url="mongodb://localhost:27017")=>{
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology: true });
         db = await client.db(dbName)
         await db.collection(collectionName).remove(filter,(err,res)=>{
             if(err){
                 console.error(err)
-                return
+                client.close()
+                return false
             }
+            client.close()
             return true
         })
-        client.close()
     }
 }
 module.exports = b;
