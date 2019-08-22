@@ -1,7 +1,7 @@
 const mongodb = require('mongodb') 
 const b = {
     update : async(dbName, collectionName, filter, update, url="mondodb://localhost:27017")=>{
-        client = await monogdb.MongoClient.connect(url,{useNewUrlParser:true});
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
         db = await client.db(dbName)
         await db.collection(collectionName).updateOne(filter,{$set:{update}},(err,res)=>{
             if(err){
@@ -13,7 +13,7 @@ const b = {
         client.close()
     },
     insert : async(dbName, collectionName, insert, url="mondodb://localhost:27017")=>{
-        client = await monogdb.MongoClient.connect(url,{useNewUrlParser:true});
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
         db = await client.db(dbName)
         await db.collection(collectionName).insertOne({insert},(err,res)=>{
             if(err){
@@ -25,7 +25,7 @@ const b = {
         client.close()
     },
     upsert : async(dbName, collectionName, filter, update, url="mondodb://localhost:27017")=>{
-        client = await monogdb.MongoClient.connect(url,{useNewUrlParser:true});
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
         db = await client.db(dbName)
         await db.collection(collectionName).updateOne(filter,{$set:{update}},{upsert:true},(err,res)=>{
             if(err){
@@ -37,7 +37,7 @@ const b = {
         client.close()
     },
     find : async(dbName, collectionName, filter, url="mondodb://localhost:27017")=>{
-        client = await monogdb.MongoClient.connect(url,{useNewUrlParser:true});
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
         db = await client.db(dbName)
         await db.collection(collectionName).find(filter,(err,documents)=>{
             if(err){
@@ -49,7 +49,7 @@ const b = {
         client.close()
     },
     findOne : async(dbName, collectionName, filter, url="mondodb://localhost:27017")=>{
-        client = await monogdb.MongoClient.connect(url,{useNewUrlParser:true});
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
         db = await client.db(dbName)
         await db.collection(collectionName).find(filter,(err,documents)=>{
             if(err){
@@ -61,7 +61,7 @@ const b = {
         client.close()
     },
     remove: async(dbName, collectionName, filter, url="mondodb://localhost:27017")=>{
-        client = await monogdb.MongoClient.connect(url,{useNewUrlParser:true});
+        client = await mongodb.MongoClient.connect(url,{useNewUrlParser:true});
         db = await client.db(dbName)
         await db.collection(collectionName).remove(filter,(err,res)=>{
             if(err){
