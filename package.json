@@ -1,0 +1,29 @@
+{
+  "name": "mongodbeginner",
+  "version": "1.0.0",
+  "description": "make your using MongoDB easier",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/integral0523/mongodbeginner.git"
+  },
+  "keywords": [
+    "mongodb",
+    "mongo"
+  ],
+  "author": "integral0523 <integral0523@gmail.com> (https://github.com/integral0523)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/integral0523/mongodbeginner/issues"
+  },
+  "homepage": "https://github.com/integral0523/mongodbeginner#readme",
+  "dependencies": {
+    "mongodb": "^3.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
